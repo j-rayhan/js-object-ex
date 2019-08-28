@@ -1,26 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { Button, Typography } from 'antd';
 import './App.css';
+import Features from './modal/test';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const { Title } = Typography;
+
+class Amenites extends Component {
+  state = { otherFeathers: Features }
+
+  handleChange = (name, value) => {
+    this.setState(prevState => {
+      return {
+        otherFeathers: {
+          ...prevState.otherFeathers,
+          [name]: !value
+        }
+      }
+    })
+  }
+  render () {
+    const { otherFeathers } = this.state;
+
+    let buttonLabel = name => {
+      let firstValue = name.replace(/\b\w/g, function(m) {
+        return m.toUpperCase()
+      })
+      let value = firstValue.match(/[A-Z][a-z]+|[0-9]+/g)
+      if (value) {
+        return firstValue.match(/[A-Z][a-z]+|[0-9]+/g).join(' ')
+      } else {
+        return name
+      }
+    }
+
+    return (
+      <div className="App">
+        <header className="App-header">
+          <Title level={3}>Create Object value Toggle</Title>
+          <div className="App-list">
+            {Object.keys(otherFeathers).map((v, i)=> 
+              <Button 
+                key={i}
+                className="App-btn"
+                htmlType="submit"
+                type={otherFeathers[v] ? "primary" : ""}
+                onClick={() => this.handleChange(v, otherFeathers[v])}
+              >
+              {buttonLabel(v)}
+              </Button>
+            )}
+          </div>
+          <Button 
+            type="ghost" 
+            onClick={() => console.log('your submit value', this.state)}
+          >
+          Submit
+          </Button>
+        </header>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default Amenites;
