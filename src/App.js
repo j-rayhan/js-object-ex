@@ -51,7 +51,7 @@ class Amenites extends Component {
             )}
           </div>
           <Button 
-            type="ghost" 
+            type="danger" 
             onClick={() => console.log('your submit value', this.state)}
           >
           Submit
